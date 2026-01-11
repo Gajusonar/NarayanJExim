@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import logo from "./assets/logo2.svg";
+import logo from "./assets/logo1-removebg-preview.svg";
 import emailjs from "@emailjs/browser";
 import galaApple from "./assets/gala-apple.jpg";
 import pinkLady from "./assets/pink-lady.jpg";
@@ -17,9 +17,8 @@ import Cardamom from "./assets/Green Cardamom.png";
 import Cinnamon from "./assets/Cinnamon Sticks.png";
 import Pepper from "./assets/Black Pepper.png";
 import Sulfuric from "./assets/Sulfuric Acid.png";
-import HCL from "./assets/HCL.png"
-import Hydroxide from "./assets/Sodium Hydroxide.png"
-import qualitybg from "./assets/bg.png";
+import HCL from "./assets/HCL.png";
+import Hydroxide from "./assets/Sodium Hydroxide.png";
 import {
   Menu,
   X,
@@ -60,6 +59,39 @@ function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const el = document.getElementById("quality-scroll") as HTMLElement | null;
+    if (!el) return;
+
+    const speed = 1.5; // pixels per tick (adjust)
+    const interval = 10; // ~60fps
+
+    const timer = setInterval(() => {
+      el.scrollLeft += speed;
+
+      if (el.scrollLeft >= el.scrollWidth - el.clientWidth) {
+        el.scrollLeft = 0;
+      }
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const scrollDown = () => {
+    window.scrollBy({
+      top: 710,
+      behavior: "smooth"
+    });
+  };
+
+  const goToPage = (page: string) => {
+    setCurrentPage(page);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   const products = [
     {
@@ -290,35 +322,48 @@ function App() {
               </div>
             </div>
             <div className="flex-1 flex justify-center">
-              <div className="relative w-full max-w-md">
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-
-                    {/* Blurred Background Image */}
+              <div className="relative max-w-xl overflow-hidden">
+                <div
+                  id="quality-scroll"
+                  className="flex gap-6 overflow-x-auto scrollbar-hide px-1 quality-mask"
+                >
+                  {[
+                    {
+                      icon: CheckCircle,
+                      title: "Quality Compliance",
+                      desc: "Products undergo multi-stage inspections to meet stringent quality benchmarks."
+                    },
+                    {
+                      icon: Shield,
+                      title: "Global Certifications",
+                      desc: "Aligned with internationally recognized standards and regulatory requirements."
+                    },
+                    {
+                      icon: Package,
+                      title: "Secure Handling & Packaging",
+                      desc: "Professionally packed to preserve integrity throughout transit."
+                    },
+                    {
+                      icon: Clock,
+                      title: "Dependable Supply Chain",
+                      desc: "Efficient logistics ensuring consistent and timely global deliveries."
+                    }
+                    ].map((item, idx) => (
                     <div
-                      className="absolute inset-0 bg-cover bg-center blur-[5px] scale-102"
-                      style={{ backgroundImage: `url(${qualitybg})` }}
-                    />
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-white/40 dark:bg-black/40" />
-                  {/* Content */}
-                  <div className="relative p-8 bg-gradient-to-br from-amber-100/70 to-orange-100/70 dark:from-slate-800/70 dark:to-slate-700/70 backdrop-blur-sm">
-                    <div className="flex justify-center mb-4">
-                      <CheckCircle className="w-20 h-20 text-green-600" />
+                      key={idx}
+                      className="min-w-[260px] p-6 rounded-2xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border shadow-lg"
+                    >
+                      <item.icon className="w-10 h-10 text-amber-500 mb-3" />
+                      <h3 className="font-semibold text-lg mb-1">{item.title}</h3>
+                      <p className="text-sm opacity-70">{item.desc}</p>
                     </div>
-                    <h3 className="text-2xl font-bold text-center mb-2 text-white">
-                      Quality Assured
-                    </h3>
-                    <p className="text-center text-white/80">
-                      Premium products from trusted sources
-                    </p>
-                  </div>
+                  ))}
                 </div>
-              </div>
+              </div>  
             </div>
           </div>
         </div>
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div onClick={scrollDown} className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
           <ChevronDown className="w-8 h-8 text-amber-500" />
         </div>
       </section>
@@ -799,7 +844,7 @@ function App() {
              <img
                 src={logo}
                 alt="logo"
-                className="w-8 h-8 text-black dark:text-white"
+                className="w-24 h-16 object-contain text-black dark:text-white"
               />
               <div>
                 <h1 className="text-xl font-bold">Narayan Jibhau</h1>
@@ -808,11 +853,41 @@ function App() {
             </div>
             
             <nav className="hidden md:flex items-center space-x-8">
-              <button onClick={() => setCurrentPage('home')} className={`hover:text-amber-500 transition ${currentPage === 'home' ? 'text-amber-500 font-semibold' : ''}`}>Home</button>
-              <button onClick={() => setCurrentPage('products')} className={`hover:text-amber-500 transition ${currentPage === 'products' ? 'text-amber-500 font-semibold' : ''}`}>Products</button>
-              <button onClick={() => setCurrentPage('about')} className={`hover:text-amber-500 transition ${currentPage === 'about' ? 'text-amber-500 font-semibold' : ''}`}>About</button>
-              <button onClick={() => setCurrentPage('contact')} className={`hover:text-amber-500 transition ${currentPage === 'contact' ? 'text-amber-500 font-semibold' : ''}`}>Contact</button>
-              <button 
+              <button
+                onClick={() => goToPage("home")}
+                className={`hover:text-amber-500 transition ${
+                  currentPage === "home" ? "text-amber-500 font-semibold" : ""
+                }`}
+              >
+                Home
+              </button>
+
+              <button
+                onClick={() => goToPage("products")}
+                className={`hover:text-amber-500 transition ${
+                  currentPage === "products" ? "text-amber-500 font-semibold" : ""
+                }`}
+              >
+                Products
+              </button>
+
+              <button
+                onClick={() => goToPage("about")}
+                className={`hover:text-amber-500 transition ${
+                  currentPage === "about" ? "text-amber-500 font-semibold" : ""
+                }`}
+              >
+                About
+              </button>
+
+              <button
+                onClick={() => goToPage("contact")}
+                className={`hover:text-amber-500 transition ${
+                  currentPage === "contact" ? "text-amber-500 font-semibold" : ""
+                }`}
+              >
+                Contact
+              </button>              <button 
                 onClick={() => setIsDarkMode(!isDarkMode)}
                 className="p-2 rounded-full hover:bg-amber-500/20 transition"
               >
@@ -873,9 +948,26 @@ function App() {
             <div>
               <h4 className="font-bold text-lg mb-4">Quick Links</h4>
               <div className="space-y-2">
-                <button onClick={() => setCurrentPage('home')} className="block hover:text-amber-500 transition">Home</button>
-                <button onClick={() => setCurrentPage('products')} className="block hover:text-amber-500 transition">Products</button>
-                <button onClick={() => setCurrentPage('about')} className="block hover:text-amber-500 transition">About Us</button>
+                <button
+                  onClick={() => goToPage("home")}
+                  className="block hover:text-amber-500 transition"
+                >
+                  Home
+                </button>
+
+                <button
+                  onClick={() => goToPage("products")}
+                  className="block hover:text-amber-500 transition"
+                >
+                  Products
+                </button>
+
+                <button
+                  onClick={() => goToPage("about")}
+                  className="block hover:text-amber-500 transition"
+                >
+                  About Us
+                </button>             
               </div>
             </div>
             <div>
