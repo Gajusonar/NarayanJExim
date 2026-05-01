@@ -21,7 +21,7 @@ import HCL from "./assets/HCL.png";
 import Hydroxide from "./assets/Sodium Hydroxide.png";
 import Nitric from "./assets/Nitric Acid.png";
 import chikooImg from "./assets/Chikoo.png";
-import BananaImg from "./assets/Banana.png”;
+import BananaImg from "./assets/Banana.png";
 import {
   Menu,
   X,
