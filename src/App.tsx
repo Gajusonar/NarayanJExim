@@ -19,6 +19,9 @@ import Pepper from "./assets/Black Pepper.png";
 import Sulfuric from "./assets/Sulfuric Acid.png";
 import HCL from "./assets/HCL.png";
 import Hydroxide from "./assets/Sodium Hydroxide.png";
+import Nitric from "./assets/Nitric Acid.png";
+import chikooImg from "./assets/Chikoo.png";
+import BananaImg from "./assets/Banana.png”;
 import {
   Menu,
   X,
@@ -255,6 +258,33 @@ function App() {
       rating: 4.8,
       image: HCL,
       description: "95% concentration laboratory-grade solvent."
+    },
+    {
+      id: 19,
+      name: "Nitric Acid",
+      origin: "India",
+      category: "Chemicals",
+      rating: 4.9,
+      image: Nitric,
+      description: "High-quality nitric acid for industrial and laboratory use."
+    },
+    {
+      id: 20,
+      name: "Chikoo",
+      origin: "India",
+      category: "Fruits",
+      rating: 4.9,
+      image: chikooImg,
+      description: "High-quality heavy fruit with soft arils and a very sweet profile."
+    },
+    {
+      id: 21,
+      name: "Banana",
+      origin: "India",
+      category: "Fruits",
+      rating: 4.9,
+      image: BananaImg,
+      description: "High-quality heavy fruit with soft arils and a very sweet profile."
     }
   ];
 
